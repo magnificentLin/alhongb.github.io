@@ -5,7 +5,7 @@ categories: [Tutorial, OpenWrt]
 tags: [OpenWrt]
 lang: en
 seo:
-  date_modified: 2020-03-02 22:39:56 +0800
+  date_modified: 2020-03-02 22:48:10 +0800
 ---
 
 In this tutorial, I will introduce how to set up a KMS (Key Management Service) on OpenWrt 18.06.01 and activate your Windows Office 2016 VOL (Volume License) editions automatically.
