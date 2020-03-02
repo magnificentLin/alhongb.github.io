@@ -2,7 +2,7 @@
 layout: post
 title: WP Mail SMTP troubleshooting
 categories: [Tutorial, WordPress]
-tags: WordPress
+tags: [WordPress]
 lang: en
 seo:
   date_modified: 2020-03-02 22:39:56 +0800

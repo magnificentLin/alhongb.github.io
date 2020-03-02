@@ -2,7 +2,7 @@
 layout: post
 title: DexGuard 常见问题解决
 categories: [Technology, Android]
-tags: Dexguard
+tags: [DexGuard]
 seo:
   date_modified: 2020-03-02 22:39:56 +0800
 ---

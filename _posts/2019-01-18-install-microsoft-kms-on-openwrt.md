@@ -2,7 +2,7 @@
 layout: post
 title: ' KMS on OpenWrt router for  activating Windows Office'
 categories: [Tutorial, OpenWrt]
-tags: OpenWrt
+tags: [OpenWrt]
 lang: en
 seo:
   date_modified: 2020-03-02 22:39:56 +0800

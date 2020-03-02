@@ -2,7 +2,7 @@
 title: App Links 及其安全性
 layout: post
 categories: [Technology, Android]
-tags: Android
+tags: [Android]
 seo:
   date_modified: 2020-03-02 22:39:56 +0800
 ---

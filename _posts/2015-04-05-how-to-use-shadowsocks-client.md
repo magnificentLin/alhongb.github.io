@@ -2,7 +2,7 @@
 layout: post
 title: Shadowsocks 客户端使用教程
 categories: [Tutorial, Shadowsocks]
-tags: Shadowsocks
+tags: [Shadowsocks]
 seo:
   date_modified: 2020-03-02 22:39:56 +0800
 ---

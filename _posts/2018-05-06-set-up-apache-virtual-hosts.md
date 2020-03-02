@@ -2,7 +2,7 @@
 layout: post
 title: CentOS 7 Apache 配置 Virtual Host （虚拟主机）
 categories: [Tutorial, Apache]
-tags: Apache
+tags: [Apache]
 seo:
   date_modified: 2020-03-02 22:39:56 +0800
 ---

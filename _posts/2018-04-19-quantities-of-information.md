@@ -2,7 +2,7 @@
 layout: post
 title: “信息量” 到底有多大？
 categories: [Living, Essay]
-tags: 信息论
+tags: [信息论]
 seo:
   date_modified: 2020-03-02 22:39:56 +0800
 ---

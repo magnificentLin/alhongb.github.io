@@ -2,7 +2,7 @@
 layout: post
 title: OpenWrt 常用网络配置
 categories: [Tutorial, OpenWrt]
-tags: OpenWrt
+tags: [OpenWrt]
 seo:
   date_modified: 2020-03-02 22:39:56 +0800
 ---

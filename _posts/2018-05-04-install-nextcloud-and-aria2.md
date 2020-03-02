@@ -2,7 +2,7 @@
 layout: post
 title: 大容量 VPS 搭建 Nextcloud 个人云盘 + aria2 在线下载
 categories: [Tutorial, NAS]
-tags: NAS
+tags: [NAS]
 seo:
   date_modified: 2020-03-02 22:39:56 +0800
 ---

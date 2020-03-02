@@ -2,7 +2,7 @@
 layout: post
 title: 声明（Declaration）与定义（Definition）的区别
 categories: [Technology, Programing]
-tags: Programing
+tags: [Programing]
 seo:
   date_modified: 2020-03-02 22:39:56 +0800
 ---

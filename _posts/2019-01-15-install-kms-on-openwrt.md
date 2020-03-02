@@ -2,7 +2,7 @@
 layout: post
 title: 搭建 OpenWrt KMS 服务，激活 Office 2016
 categories: [Tutorial, OpenWrt]
-tags: OpenWrt
+tags: [OpenWrt]
 seo:
   date_modified: 2020-03-02 22:39:56 +0800
 ---

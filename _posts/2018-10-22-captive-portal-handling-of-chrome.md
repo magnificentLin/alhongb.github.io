@@ -2,7 +2,7 @@
 layout: post
 title: Chrome 的 Captive Portal 处理机制
 categories: [Technology, Chromium]
-tags: Chromium
+tags: [Chromium]
 seo:
   date_modified: 2020-03-02 22:39:56 +0800
 ---

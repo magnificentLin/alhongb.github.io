@@ -1,7 +1,7 @@
 ---
 title: 编译器介绍
 categories: [Technology, Compiler]
-tags: compiler
+tags: [compiler]
 layout: post
 seo:
   date_modified: 2020-03-02 22:39:56 +0800

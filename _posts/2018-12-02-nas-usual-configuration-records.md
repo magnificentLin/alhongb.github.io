@@ -2,7 +2,7 @@
 title: NAS 相关问题记录
 date: '2018-12-02'
 categories: [Tutorial, NAS]
-tags: NAS
+tags: [NAS]
 seo:
   date_modified: 2020-03-02 22:39:56 +0800
 ---

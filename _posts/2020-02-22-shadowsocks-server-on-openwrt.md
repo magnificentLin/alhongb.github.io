@@ -2,7 +2,7 @@
 title: OpenWrt 安装 Shadowsocks Server
 categories: [Tutorial, Shadowsocks]
 tags: Shadowsocks
-layout: post
+layout: [post]
 seo:
   date_modified: 2020-03-02 22:39:56 +0800
 ---
