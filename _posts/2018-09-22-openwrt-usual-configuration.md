@@ -4,7 +4,7 @@ title: OpenWrt 常用网络配置
 categories: [Tutorial, OpenWrt]
 tags: OpenWrt
 seo:
-  date_modified: 2020-02-22 12:28:47 +0800
+  date_modified: 2020-03-02 22:39:56 +0800
 ---
 
 文章记录了博主使用 OpenWrt 过程中多项常用网络功能的配置方法，包括 AP 模式、主机名设置、USB 联网等，以备后续之需。

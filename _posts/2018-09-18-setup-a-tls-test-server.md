@@ -4,7 +4,7 @@ title: 搭建 SSL/TLS 测试服务器
 categories: [Technology, Cybersecurity]
 tags: SSL/TLS
 seo:
-  date_modified: 2020-02-22 12:28:47 +0800
+  date_modified: 2020-03-02 22:39:56 +0800
 ---
 
 本文介绍了在 Ubuntu 18.04 环境下利用 OpenSSL 的 s_server 命令搭建 SSL/TLS 测试服务器的方法，可用于测试 Chrome 浏览器下的各种 SSL/TLS 错误。

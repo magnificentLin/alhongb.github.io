@@ -4,7 +4,7 @@ layout: post
 categories: [Technology, Android]
 tags: Android
 seo:
-  date_modified: 2020-02-25 02:11:03 +0800
+  date_modified: 2020-03-02 22:39:56 +0800
 ---
 
 在 Android 上 Google 提供了一套名为 [App Links]( https://developer.android.com/training/app-links/deep-linking ) 和 [Deep Links]( https://developer.android.com/training/app-links/verify-site-associations )  的由 URI/URL 跳转到原生 Android 应用组件的协议及实现，使得用户从能够从原生应用（包括浏览器页面）直接通过链接跳转到指定的应用内容。本文详细介绍了它们如何运作，并剖析了其中的安全性。

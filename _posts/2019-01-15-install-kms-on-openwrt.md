@@ -4,7 +4,7 @@ title: 搭建 OpenWrt KMS 服务，激活 Office 2016
 categories: [Tutorial, OpenWrt]
 tags: OpenWrt
 seo:
-  date_modified: 2020-02-22 12:28:47 +0800
+  date_modified: 2020-03-02 22:39:56 +0800
 ---
 
 本文介绍了如何在 OpenWrt 18.06.1 下安装 KMS 服务并激活你的 Windows Office 2016 VOL 版。

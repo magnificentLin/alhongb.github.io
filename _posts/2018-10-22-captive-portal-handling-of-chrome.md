@@ -4,7 +4,7 @@ title: Chrome 的 Captive Portal 处理机制
 categories: [Technology, Chromium]
 tags: Chromium
 seo:
-  date_modified: 2020-02-22 11:14:05 +0800
+  date_modified: 2020-03-02 22:39:56 +0800
 ---
 
 Google Chrome 在 M63 版本引入了一项修改以解决 Captive Portal 场景下的用户登录问题 —— 当未登录的用户访问 HTTPS 网站时，由于 Captive Portal 的拦截，浏览器会出现网络超时、SSL/TLS 告警等问题。本文详细介绍了 Chrome M63 的这项机制。

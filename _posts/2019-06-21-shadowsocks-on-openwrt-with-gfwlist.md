@@ -4,7 +4,7 @@ title: OpenWrt Shadowsocks 使用 GFWList 路由规则
 categories: [Tutorial, Shadowsocks]
 tags: [Shadowsocks, OpenWrt]
 seo:
-  date_modified: 2020-02-26 21:28:04 +0800
+  date_modified: 2020-03-02 22:39:56 +0800
 ---
 
 ## 介绍

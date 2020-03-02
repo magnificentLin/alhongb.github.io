@@ -4,7 +4,7 @@ categories: [Tutorial, Shadowsocks]
 tags: Shadowsocks
 layout: post
 seo:
-  date_modified: 2020-02-22 18:13:47 +0800
+  date_modified: 2020-03-02 22:39:56 +0800
 ---
 
 在 OpenWrt 路由器上安装 server 版 Shadowsocks，使得客户端设备能够以 VPN 的形式远程连接到家庭局域网。
