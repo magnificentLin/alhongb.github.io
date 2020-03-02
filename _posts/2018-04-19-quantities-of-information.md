@@ -4,7 +4,7 @@ title: “信息量” 到底有多大？
 categories: [Living, Essay]
 tags: [信息论]
 seo:
-  date_modified: 2020-03-02 22:48:10 +0800
+  date_modified: 2020-03-02 22:56:24 +0800
 ---
 
 ## 前言
