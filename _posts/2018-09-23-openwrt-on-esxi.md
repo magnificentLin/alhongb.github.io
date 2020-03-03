@@ -1,5 +1,5 @@
 ---
-title: 在 ESXi 主机上安装配置 OpenWrt
+title: ESXi 安装&配置 OpenWrt
 categories: [Tutorial, ESXi]
 tags: [ESXi, OpenWrt]
 seo:
