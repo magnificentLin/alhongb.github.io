@@ -129,20 +129,20 @@ option ula_prefix 'fdaf:b952:d594::/48'
 
 config interface 'lan'
 option type 'bridge'
-option ifname '**eth0 eth1 eth3**'
+option ifname 'eth0 eth1 eth3'
 option proto 'static'
 option ipaddr '192.168.1.1'
 option netmask '255.255.255.0'
 option ip6assign '60'
-option _orig_ifname '**eth3**'
-option _orig_bridge '**true**'
+option _orig_ifname 'eth3'
+option _orig_bridge 'true'
 
 config interface 'wan'
-option ifname '**eth2**'
+option ifname 'eth2'
 option proto 'dhcp'
 
 config interface 'wan6'
-option ifname '**eth2**'
+option ifname 'eth2'
 option proto 'dhcpv6'
 ```
 
