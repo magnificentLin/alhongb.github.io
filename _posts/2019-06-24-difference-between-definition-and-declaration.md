@@ -19,7 +19,7 @@ int a;
 以下这些声明也包含了定义行为：
 
 ```c
-double val\[MAXVAL\];
+double val [MAXVAL];
 ```
 
 如果，你仅仅需要声明而不想定义，即不想分配任何内存，则可用下面的语句：
@@ -32,7 +32,7 @@ extern int a;
 下面仅仅是声明：
 
 ```c
-extern double val\[\];
+extern double val [];
 typedef ...;
 ```
 
