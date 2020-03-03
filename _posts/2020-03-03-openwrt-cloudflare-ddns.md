@@ -1,5 +1,5 @@
 ---
-title: OpneWrt Cloudflare DDNS
+title: OpenWrt Cloudflare DDNS
 categories: [Tutorial, OpenWrt]
 tags: [OpenWrt, DDNS]
 layout: post
