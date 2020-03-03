@@ -77,7 +77,7 @@ Nextcloud 作为云盘软件，实际上主要的文件管理功能完全可以�
 
 我同样选择 linuxserver 提供的镜像，[Docker Hub - linuxserver/nextcloud](https://hub.docker.com/r/linuxserver/nextcloud)。之所以不选择官方镜像，是因为其不支持设置容器进程的 UID/GID，无法控制容器进程的读写权限。
 
-Nextcloud 容器运行起来后，还要编辑一下它的配置文件，将域名修正为你自己的实际域名，我的例子是 `disk.linhongbo.com`
+Nextcloud 容器运行起来后，还要编辑一下它的配置文件，将域名修正为你自己的实际域名，我的例子是 `nextcloud.linhongbo.com`
 
 ```sh
 vim /var/lib/docker/volumes/nextcloud_config/_data/www/nextcloud/config/config.php
@@ -92,11 +92,11 @@ $CONFIG = array (
   'trusted_domains' =>
   array (
           0 => 'openmediavault',
-          1 => 'disk.linhongbo.com',
+          1 => 'nextcloud.linhongbo.com',
   ),
   'dbtype' => 'sqlite3',
   'version' => '18.0.1.3',
-  'overwrite.cli.url' => 'https://disk.linhongbo.com:8443',
+  'overwrite.cli.url' => 'https://nextcloud.linhongbo.com:8443',
   'installed' => true,
 );
 ```
