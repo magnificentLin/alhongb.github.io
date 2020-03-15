@@ -57,9 +57,9 @@ seo:
 
 ![ESXi OpenWrt 网络逻辑架构](/assets/img/post/ESXi-OpenWrt-Architecture-1.png)
 
-其中 OpenWrt 虚拟机通过 `OpenWrt LAN0` ~ `OpenWrt LAN2`和 `OpenWrt WAN` 四个端口组连接到虚拟交换机 `vSwitch0` ~ `vSwitch3` 进而连通 `VMNIC0` ~ `VMNIC3` 四个物理网口。由于 `OpenWrt LAN` 系列端口组开启了混杂模式，具备监控虚拟网络流量的能力，当其中某个虚拟交换机收到 MAC 帧时，会将此帧转发复制到 OpenWrt LAN_x_ 上，OpenWrt 接收后由内部网桥系统决定如何处理（转发到其他 LAN 口或路由至 WAN 上）。如果 OpenWrt LAN 端口组不开启混杂模式，如前所述，由于虚拟交换机不具备学习能力，将丢弃需要转发的 MAC 帧，OpenWrt 将无法接收和转发数据流量。
+其中 OpenWrt 虚拟机通过 `OpenWrt LAN0` ~ `OpenWrt LAN2`和 `OpenWrt WAN` 四个端口组连接到虚拟交换机 `vSwitch0` ~ `vSwitch3` 进而连通 `VMNIC0` ~ `VMNIC3` 四个物理网口。由于 `OpenWrt LAN` 系列端口组开启了混杂模式，具备监控虚拟网络流量的能力，当其中某个虚拟交换机收到 MAC 帧时，会将此帧转发复制到 OpenWrt br-lan 上，OpenWrt 接收后由内部网桥系统决定如何处理（转发到某个 LAN 口或路由至 WAN 上）。如果 OpenWrt LAN 端口组不开启混杂模式，由于虚拟交换机不具备 MAC 地址学习能力，将丢弃需要转发的 MAC 帧，OpenWrt 将无法接收和转发数据流量。
 
-`混杂模式`：因为虚拟交换机不像传统物理交换机，它不具备MAC 学习功能：`vSwitch` 所有接入端口的设备（VMs）是预先配置好的，它知道这些接入端口组的接口的 MAC 地址，而不需要根据数据包的源 MAC 来更新 MAC 与 PORT 的映射。因此，在混杂模式未开启情况下，如果目标 MAC 不属于该虚拟交换机，那么虚拟交换机将丢弃该数据包。虚拟交换机或端口组开启混杂模式后，所属的 PORT 将收到虚拟交换机上 VLAN 策略所允许的所有流量。这种特性可用来监控虚拟网络流量。
+进一步解释 `混杂模式` 作用：因为虚拟交换机不像传统物理交换机，它不具备 MAC 学习功能力：`vSwitch` 所有接入端口的设备（VMs）是预先配置好的，虚拟交换机它知道这些接入端口组的接口的 MAC 地址，而不需要根据数据包的源 MAC 来更新 MAC 与 PORT 的映射。因此，在混杂模式未开启情况下，如果目标 MAC 不属于该虚拟交换机，那么虚拟交换机将丢弃该数据包。虚拟交换机或端口组开启混杂模式后，所属的 PORT 将收到虚拟交换机上 VLAN 策略所允许的所有流量。这种特性可用来监控虚拟网络流量。
 
 至此，完成端口组的配置。这些端口组后续将被 OpenWrt 虚拟机内的虚拟网络适配器使用。
 
