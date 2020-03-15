@@ -69,9 +69,9 @@ seo:
 VMs（虚拟机）
    ↓↑
 Port Groups（端口组）
- ↓↑
+   ↓↑
 vSwitch（虚拟交换机）
-↓↑ 
+   ↓↑ 
 Physical NICs（硬件网络适配器）
 ```
 
