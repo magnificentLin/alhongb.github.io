@@ -73,7 +73,7 @@ Port Groups（端口组）
 vSwitch（虚拟交换机）
 ↓↑ 
 Physical NICs（硬件网络适配器）
-``
+```
 
 上面是各虚拟网络组件的层级与数据流图，其中
 
