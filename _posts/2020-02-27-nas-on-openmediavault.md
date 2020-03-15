@@ -4,7 +4,7 @@ categories: [Tutorial, NAS]
 tags: [openmediavault]
 layout: post
 seo:
-  date_modified: 2020-03-02 22:39:56 +0800
+  date_modified: 2020-03-03 10:57:51 +0800
 ---
 
 本文记录了博主在 openmediavault 上搭建个人 NAS 系统的详细过程，包括：安装配置 openmediavault、Docker；部署 Transmission BT 工具、Nextcloud 网盘等容器；配置 HTTP/HTTPS 反向代理和 Let's Encrypt 证书。
