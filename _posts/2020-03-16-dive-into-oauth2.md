@@ -1,8 +1,10 @@
- ---
+---
 title: 深入理解 OAuth 2.0
 categories: [Technology，Cybersecurity]
 tags: [OAuth 2.0]
 layout: post
+seo:
+  date_modified: 2020-03-16 19:30:11 +0800
 ---
 
 OAuth 2.0 RFC（[The OAuth 2.0 Authorization Framework](https://tools.ietf.org/html/rfc6749)）篇幅很长、内容详实，覆盖了包括原理概念、工作流程、报文格式、安全性、拓展性等等诸多方面，直接阅读十分不易。因此，本文结合博主的背景知识，提取、翻译规范主干内容并深入解读 OAuth 2.0，意图帮助读者避免一开始就陷入 RFC 的繁枝末节中。
