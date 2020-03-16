@@ -413,8 +413,7 @@ OAuth 2.0 也使用 `endpoint` 来描述不同角色的不同功能接口，整�
 
 `client credentials` 授权模式必须仅用于 `confidential` 类型的 `client`。（因为这种授权模型，`protected resource` 的安全性依赖于对 `client` 的认证的安全性，`public client` 显然是不妥的）
 
-<pre><font face="monospace">
-     +---------+                                  +---------------+
+<pre><font face="monospace">     +---------+                                  +---------------+
      |         |                                  |               |
      |         |>--(A)- Client Authentication --->| Authorization |
      | Client  |                                  |     Server    |
@@ -473,7 +472,7 @@ OAuth 2.0 也使用 `endpoint` 来描述不同角色的不同功能接口，整�
 
 参阅「Access Token 可以代表用户（认证）吗？」问题，正因为 `access token` 无法用于认证用户，而又有引入中间层（用户不直接在 `client` 处认证）的需求，因此诞生了 `Open ID`，使得 `client` 可以通过信任的另外的一个 `authentication server` 来认证某个用户：用户在这个 `authentication server`上使用凭据进行认证，然后 `authentication server` 告诉 `client ` 用户真实的身份。
 
-参考：[Difference Between OAUTH, OpenID and OPENID Connect in very simple term?](https://security.stackexchange.com/questions/44611/difference-between-oauth-openid-and-openid-connect-in-very-simple-term)
+参考 [Difference Between OAUTH, OpenID and OPENID Connect in very simple term?](https://security.stackexchange.com/questions/44611/difference-between-oauth-openid-and-openid-connect-in-very-simple-term)
 
 - **Access Token 可以代表用户（认证）吗？**
 
@@ -483,13 +482,11 @@ OAuth 2.0 也使用 `endpoint` 来描述不同角色的不同功能接口，整�
 
 上述的回答还没有根本地回答问题，即为什么 `client` 从 `access token` 中无法获取用户的身份？仔细看 RFC6749 就可以知道，OAuth 2.0 规范并没有定义 `access token` 的规格，包括 `client` 如何解析 `access token` 等等，甚至规范认为 `access token` 作为字符串，对于 `client` 是不透明且没有语义的，`client` 只是拿着 `access token` 去访问资源，并只在 `resource server` 处产生语义（`scope` 等）。
 
-参考：[rfc6749#section-10.16](https://tools.ietf.org/html/rfc6749#section-10.16)
+参考 [rfc6749#section-10.16](https://tools.ietf.org/html/rfc6749#section-10.16)
 
 - **Access Token 仅代表权限，那么它如何和用户关联起来呢？换言之，一个 Access Token 的 Scope 能访问其他用户的资源么？**
 
-1\. [How can a OAuth2 resource server relate an access token to the user that authorized it to prevent unauthorized access to other user resources?](https://security.stackexchange.com/questions/199120/how-can-a-oauth2-resource-server-relate-an-access-token-to-the-user-that-authori/199178)
-
-2\. [rfc7662](https://tools.ietf.org/html/rfc7662)
+参考 [How can a OAuth2 resource server relate an access token to the user that authorized it to prevent unauthorized access to other user resources?](https://security.stackexchange.com/questions/199120/how-can-a-oauth2-resource-server-relate-an-access-token-to-the-user-that-authori/199178) 和 [rfc7662](https://tools.ietf.org/html/rfc7662)
 
 - **Code 模式下 Web Application 类型的 Client 将 Access Token 放置在服务器端使用，因为认为 user-agent 所在的环境不安全。但是 user-agent 和服务器端之间本身是有一层认证授权凭据（比如会话），如果这些信息容易泄露， 恶意 user-agent 同样可以使用它来操作 Access Token，那么把 Access Token 放在服务器端使用有什么安全意思呢，放置在 user-agent 处不是一样的吗？**
 
