@@ -227,7 +227,7 @@ Embedded user-agent - `native application` 通过直接通信从 `embedded user-
 
 （造成上述二者区别的原因：技术上前者通常和 `native application` 是不同应用程序，有不同进程边界，而后者则或运行在 `native application` 的进程空间或属于 `native application` 的一部分）
 
-扩展解读：距离 RFC6749 发布近 8 年，现代浏览器的技术实现细节发生了很多变化，规范早期定义的 user-agent 的具体形态也随之调整。例如 Android 平台的 `Custom Tab` 特性（Chrome 提供），提供了一种不离开应用（in-app）使用浏览器的方式，这种情景下 user-agent 虽然「嵌入」到应用内，却具有隔离的运行空间和上下文，应用无法访问 Tab 内的 Web 内容。因此术语「external」应当引申为具有独立隔离的运行、安全环境，而不局限于字面意义上的「外部」。
+扩展解读：距离 RFC6749 发布近 8 年，现代浏览器的技术实现细节发生了很多变化，规范早期定义的 user-agent 的具体形态也随之调整。例如 Android 平台 Chrome 浏览器的 [Custom Tab](https://developer.chrome.com/multidevice/android/customtabs) 特性，提供了一种不离开应用（in-app）使用浏览器的方式，这种情景下 user-agent 虽然「嵌入」到应用内，却具有隔离的运行空间和上下文，应用无法访问 Tab 内的 Web 内容。因此术语「external」应当引申为具有独立隔离的运行、安全环境，而不局限于字面意义上的「外部」。
 
 ## Protocol Endpoints
 
