@@ -304,7 +304,7 @@ OAuth 2.0 也使用 `endpoint` 来描述不同角色的不同功能接口，整�
      |         |<---(E)----- Access Token -------------------'
      +---------+       (w/ Optional Refresh Token)
 
-      注：由于要穿过 user-agent，步骤（A），（B）和（C）的线间断为两部分。
+    注：由于要穿过 user-agent，步骤（A），（B）和（C）的线间断为两部分。
 
                   图 3：Authorization Code Flow
 </font></pre>
@@ -364,7 +364,7 @@ OAuth 2.0 也使用 `endpoint` 来描述不同角色的不同功能接口，整�
      |  Client |
      |         |
      +---------+
-         注：由于要穿过 user-agent，步骤（A）和（B）的线间断为两部分。
+     注：由于要穿过 user-agent，步骤（A）和（B）的线间断为两部分。
 
                        图 4: Implicit Grant Flow
 </font></pre>
@@ -377,25 +377,25 @@ OAuth 2.0 也使用 `endpoint` 来描述不同角色的不同功能接口，整�
 
 尽管该授权模式需要 `client` 直接接触 `resource owner` 的凭据（意味者存在凭据泄露或身份被仿冒的可能），但实际上 `resource owner` 的凭据仅在请求时使用一次，最终还是会被转换成 `access token`。因此，password 模式可用于需要规避 `client` 为了后续使用而存储 `resouce owner` 凭据的场景（比如 `HTTP Basic`、`HTTP Digest` 认证），其核心安全收益在于将凭据替换成了长期的 `access token` 或 `refresh token`。
 
-<pre><font face="monospace">     +----------+
-     | Resource |
-     |  Owner   |
-     |          |
-     +----------+
-          v
-          |    Resource Owner
-         (A) Password Credentials
-          |
-          v
-     +---------+                                  +---------------+
-     |         |>--(B)---- Resource Owner ------->|               |
-     |         |         Password Credentials     | Authorization |
-     | Client  |                                  |     Server    |
-     |         |<--(C)---- Access Token ---------<|               |
-     |         |    (w/ Optional Refresh Token)   |               |
-     +---------+                                  +---------------+
+<pre><font face="monospace">     +----------+
+     | Resource |
+     |  Owner   |
+     |          |
+     +----------+
+          v
+          |    Resource Owner
+         (A) Password Credentials
+          |
+          v
+     +---------+                                  +---------------+
+     |         |>--(B)---- Resource Owner ------->|               |
+     |         |         Password Credentials     | Authorization |
+     | Client  |                                  |     Server    |
+     |         |<--(C)---- Access Token ---------<|               |
+     |         |    (w/ Optional Refresh Token)   |               |
+     +---------+                                  +---------------+
 
-            图 5：Resource Owner Password Credentials Flow
+           图 5: Resource Owner Password Credentials Flow
 </font></pre>
 
 图 5 描述的工作流程包含以下步骤：
@@ -412,15 +412,15 @@ OAuth 2.0 也使用 `endpoint` 来描述不同角色的不同功能接口，整�
 
 `client credentials` 授权模式必须仅用于 `confidential` 类型的 `client`。（因为这种授权模型，`protected resource` 的安全性依赖于对 `client` 的认证的安全性，`public client` 显然是不妥的）
 
-<pre><font face="monospace">     +---------+                                  +---------------+
-     |         |                                  |               |
-     |         |>--(A)- Client Authentication --->| Authorization |
-     | Client  |                                  |     Server    |
-     |         |<--(B)---- Access Token ---------<|               |
-     |         |                                  |               |
-     +---------+                                  +---------------+
-   
-                     图 6：Client Credentials Flow
+<pre><font face="monospace">     +---------+                                  +---------------+
+     |         |                                  |               |
+     |         |>--(A)- Client Authentication --->| Authorization |
+     | Client  |                                  |     Server    |
+     |         |<--(B)---- Access Token ---------<|               |
+     |         |                                  |               |
+     +---------+                                  +---------------+
+
+                   图 6: Client Credentials Flow
 </font></pre>
 
 图 6 描述的工作流程包含以下步骤：
