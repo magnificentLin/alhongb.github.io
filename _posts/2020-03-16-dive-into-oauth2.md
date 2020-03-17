@@ -174,7 +174,7 @@ OAuth 2.0 定义了多种工作模式以应用不同场景，但逻辑上它们�
 - 指定 `client type`，正如本文下一节 [「Client Type」](#client-type-and-client-authentication) 所述的
 - 提供 `client` 的 `redirection URI`
 
-重定向 URI（`redirection URI`）是标识可以接受响应的一个地址，无论是 `client`、`user-agent` 还是 `authorization server`，都会使用这种地址跳转技术来发送或接受消息，这种行为类似于软件开放中的 callback：请求者留下一个重定向地址，响应者则通过这一地址发送准备好的响应。在 OAuth 2.0 你将多次看到它。详细参考 [rfc6749#section-3.1.2](https://tools.ietf.org/html/rfc6749#section-3.1.2）
+重定向 URI（`redirection URI`）是标识可以接受响应的一个地址，无论是 `client`、`user-agent` 还是 `authorization server`，都会使用这种地址跳转技术来发送或接受消息，这种行为类似于软件开放中的 callback：请求者留下一个重定向地址，响应者则通过这一地址发送准备好的响应。在 OAuth 2.0 你将多次看到它。详细内容参考 [rfc6749#section-3.1.2](https://tools.ietf.org/html/rfc6749#section-3.1.2)
 
 - `authorization server` 要求的任何其他信息，如应用名称、网站地址、描述、logo 图片和接受的法律条款等等
 
