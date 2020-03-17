@@ -29,9 +29,9 @@ OAuth 2.0 授权框架通过在 `client` 和 `resource owner` 之间引入一个
 
 解读：「委托专用」意味该凭据只能用于委派访问场景，而不可用于其他的，如认证场景。传统认证授权模式下客户端直接使用用户 「身份」，即使后续不保存用户的凭证（账户和口令），也使用了 token、session ID 等身份认证凭据。这是两种模式的本质区别，也是 「授权」 和 「认证」 的区别。
 
-### 角色定义
+### 角色
 
-OAuth 2.0 定义了四种角色
+OAuth 2.0 授权模型定义了四种角色
 
 - resource owner
 
@@ -51,7 +51,7 @@ OAuth 2.0 定义了四种角色
 
 OAuth 2.0 也没有规定 `authorization server` 和 `resource server` 之间应该如何交互：根据不同的实现，二者可以同时部署在一个服务器上，也可以分属于不同的实体。而且，单个 `authorization Server` 也可能签发被多个 `resource server` 接受的 `access token`。
 
-### 逻辑工作流程（Protocol Flow）
+### Protocol Flow
 
 <pre><font face="monospace">     +--------+                               +---------------+
      |        |--(A)- Authorization Request ->|   Resource    |
@@ -74,7 +74,7 @@ OAuth 2.0 也没有规定 `authorization server` 和 `resource server` 之间应
                   图 1：逻辑工作流程
 </font></pre>
 
-OAuth 2.0  定义了多种工作模式以应用不同场景，它们的逻辑工作流可以抽象为如上图所示，这张图描述了各角色间如何交互：
+OAuth 2.0 定义了多种工作模式以应用不同场景，但逻辑上它们的工作流程都可以抽象为上图。此图描述了各角色间如何交互：
 
   (A)   `client` 请求来自 `resource owner` 的授权。授权请求可以直接地发往 `resouce owner`（正如图中所示），也可以间接地，通过 `authorization server` 作为中介来处理。
 
@@ -90,13 +90,13 @@ OAuth 2.0  定义了多种工作模式以应用不同场景，它们的逻辑工
 
   (F) `resource server` 校验  `access token` ，如果合法，正常响应资源请求
 
-###  Authorization Grant
+### Authorization Grant
 
 `authorization grant` （授权许可），是一个代表 `resource owner` 对受保护资源进行了授权的凭据，被 `client` 使用来获取访问资源的 `access token`。OAuth 2.0 定义了四种类型（`type`）的 `authorization grant`，包括：`authorization code`、`implicit`、`resource owner password credentials` 和 `client credentials`。字面上看，它们的区别在于有的直接使用 `resource owner` 的账户口令来授权，有的采用间接方式授权，而有的只用 `client` 身份即可获得访问授权。此外，OAuth 2.0 还支持[扩展的许可类型](https://tools.ietf.org/html/rfc6749#section-4.5)，受限篇幅本文不做介绍。
 
 回顾逻辑工作流图可以看到，`authorization grant` 被用于 `(B)`、`(C)` 两个步骤，实际工作流中则分别对应有四种 「flow」。其中有些工作流程简单、有些相对复杂，有些具有 OAuth 2.0 全部安全属性而有些则安全性欠佳。这部分内容在章节[「四种授权模式（grant types）及工作流」](#四种授权模式（grant types）及工作流)会详细展开介绍。
 
-###  Access Token
+### Access Token
 
 `access token` 是访问受保护资源的凭据，是一段颁布给 `client`、代表授权的字符串。具体而言，`token` 表达了 `resource owner` 授予访问的特定范围（`scope`）、持续时间，并且由 `resource server` 和 `authorization server` 落实前述限制。通常，`access token` 字符串（的含义）对 `client` 不透明。
 
@@ -165,7 +165,7 @@ OAuth 2.0  定义了多种工作模式以应用不同场景，它们的逻辑工
 | password | 可选          |
 | client   | 不应该使用    |
 
-##  Client
+## Client
 
 ### Client Registration
 
@@ -244,7 +244,7 @@ OAuth 2.0 也使用 `endpoint` 来描述不同角色的不同功能接口，整�
 - Authorization endpoint - 被 `client` 用来获取 `resource owner` 的授权，借助于 `user-agent` 的重定向机制。
 - Token endpoint - 被 `client` 用来将（用户的）授权兑换为一个 `access token`，通常伴随着对 `client` 的认证。
 
-###  Client  的一个  Endpoint
+### Client 的一个 Endpoint
 
 - Redirection endpoint - 被 `authorization server` 用来返回包含授权凭证的响应，借助 `resource owner` 的 `user-agent`
 
@@ -262,9 +262,9 @@ OAuth 2.0 也使用 `endpoint` 来描述不同角色的不同功能接口，整�
 
 更多关于 `Protocol Endpoints` 的介绍请参考 [rfc6749#section-3](https://tools.ietf.org/html/rfc6749#section-3)
 
-## 四种授权模式（grant types）及工作流
+## 四种授权模式及工作流
 
-前文提到 `resource owner` 有四种方式对 ``client`` 进行 `authorization grant`，对应的，有四种工作流程，本章逐一介绍。
+前文提到 `resource owner` 有四种授权模式（`grant type`）对 `client` 进行 `authorization grant`，对应的，有四种工作流程，本章逐一介绍。
 
 拓展阅读：其实，OAuth 的 1.0 版本期望用全面的单一协议流程来囊括所有应用场景（OAuth 1.0 早期本来也是分离的三种流程，但后来各方讨论后合并为单一种），然而实践中发现单一流程虽能比较好地适用于基于 Web 的应用程序，但在其他方面却提供了较差的体验，而单一但复杂的流程也造成了集成困难和混乱。OAuth 2.0 版本，终于回归细分场景适配不同流程的策略。关于这部分内容，参见 [User Experience and Alternative Token Issuance Options](https://www.oauth.com/oauth2-servers/differences-between-oauth-1-2/user-experience-alternative-token-issuance-options/)。
 
@@ -372,7 +372,7 @@ OAuth 2.0 也使用 `endpoint` 来描述不同角色的不同功能接口，整�
 
 注：由于没有用 `authortization code` 交换 `token` 这一步骤，`client` 不和 `authortization server` 直接交互；`implicit` 模式下 `authorization server` 不认证  `client`，而是仅用c重定向 URI 来标识 `client` 身份，因此确保 URI 的完整性是 `implicit` 模式的安全关键。
 
-## Resource Owner Password Credentials
+### Resource Owner Password Credentials
 
 不同于 `authortization code` 和 `implicit` 授权模式在 `authorizaiton server` 处间接授权 `client`，`resource owner password credentials` 授权模式是 `resouce owner` 直接将自身的口令（例如用户名和口令)）作为授权凭据，让 `client` 获取 `access token`。显而易见，这种授权模式仅适用于 `resource owner` 和 `client` 之间存在有高度的信任关系（比如 `client` 是操作系统的一部分或高度特权的应用），且其他的授权许可类型不可用时，意味着 `auhtorization server` 需要谨慎支持这种模式。
 
@@ -407,7 +407,7 @@ OAuth 2.0 也使用 `endpoint` 来描述不同角色的不同功能接口，整�
 
   (C)  `authorization server` 认证 `client` 和 `resource owner` 的凭证，如果合法，颁发 `access token`。
 
-## Client Credentials
+### Client Credentials
 
 `client` 可以仅使用其 `client credentials` （或其他支持的认证措施）就可请求 `access token`，这适用于被请求的 `protected resource` 属于 `client` 控制的场景（注解：代表 `client` 自己访问资源而用户），或是 `authorization server` 事先安排的、其他 `resource owner` 的` protected resource`。
 
