@@ -27,7 +27,7 @@ OAuth 2.0 授权框架通过在 `client` 和 `resource owner` 之间引入一个
 
 举例来说：一个最终用户（`resource owner`) 可以授权某个打印机服务（`client`）访问她存储于照片分享服务提供者（`resource server`）上的受保护照片，而不用和打印机服务分享她自己的用户名和口令。取代之的是，她直接向照片分享服务提供者信任的服务器认证（`authorization Server`），然后服务器向打印机服务发布委托专用（`delegation-specific`）凭据（`access token`）。
 
-解读：「委托专用」意味该凭据只能用于委派访问场景，而不可用于其他的，如认证场景。传统认证授权模式下客户端直接使用用户「身份」，即使后续不保存用户的凭证（账户和口令），也使用了 token、session ID 等身份认证凭据。这是两种模式的本质区别，也是 「授权」 和 「认证」 的区别。
+解读：「委托专用」意味该凭据只能用于委派访问场景，而不可用于其他的，如认证场景。传统认证授权模式下客户端直接使用用户「身份」，即使后续不保存用户的凭证（账户和口令），也使用了 token、session ID 等身份认证凭据。这是两种模式的本质区别，也是「授权」和「认证」的区别。
 
 ### 角色
 
@@ -171,7 +171,7 @@ OAuth 2.0 定义了多种工作模式以应用不同场景，但逻辑上它们�
 
 接入 OAuth 2.0 协议之前，要向 `authorization Server` 注册 `client`，使 `authorization Server` 能提前获知 `clients` 的信息以做更细粒度的访问控制，至于通过何种渠道注册并不在规范范畴内定义，通常情况是用户在 HTML 表单中提交注册操作。而注册的内容，OAuth 2.0 认为**应该**包括：
 
-- 指定 `client type`，正如本文下一节 [「Client Type」](#Client-Type-and-Client-Authentication) 所述的
+- 指定 `client type`，正如本文下一节 [「Client Type」](#client-type-and-client-authentication) 所述的
 - 提供 `client` 的 `redirection URI`
 
 重定向 URI（`redirection URI`）是标识可以接受响应的一个地址，无论是 `client`、`user-agent` 还是 `authorization server`，都会使用这种地址跳转技术来发送或接受消息，这种行为类似于软件开放中的 callback：请求者留下一个重定向地址，响应者则通过这一地址发送准备好的响应。在 OAuth 2.0 你将多次看到它。详细参考 [rfc6749#section-3.1.2](https://tools.ietf.org/html/rfc6749#section-3.1.2）
