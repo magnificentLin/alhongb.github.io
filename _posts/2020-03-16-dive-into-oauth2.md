@@ -27,7 +27,7 @@ OAuth 2.0 授权框架通过在 `client` 和 `resource owner` 之间引入一个
 
 举例来说：一个最终用户（`resource owner`) 可以授权某个打印机服务（`client`）访问她存储于照片分享服务提供者（`resource server`）上的受保护照片，而不用和打印机服务分享她自己的用户名和口令。取代之的是，她直接向照片分享服务提供者信任的服务器认证（`authorization Server`），然后服务器向打印机服务发布委托专用（`delegation-specific`）凭据（`access token`）。
 
-解读：「委托专用」意味该凭据只能用于委派访问场景，而不可用于其他的，如认证场景。传统认证授权模式下客户端直接使用用户 「身份」，即使后续不保存用户的凭证（账户和口令），也使用了 token、session ID 等身份认证凭据。这是两种模式的本质区别，也是 「授权」 和 「认证」 的区别。
+解读：「委托专用」意味该凭据只能用于委派访问场景，而不可用于其他的，如认证场景。传统认证授权模式下客户端直接使用用户「身份」，即使后续不保存用户的凭证（账户和口令），也使用了 token、session ID 等身份认证凭据。这是两种模式的本质区别，也是 「授权」 和 「认证」 的区别。
 
 ### 角色
 
@@ -43,7 +43,7 @@ OAuth 2.0 授权模型定义了四种角色
 
 - client
 
-客户端，一个在 `resource owner` 的授权下代其请求受保护资源的应用。RFC6749 特别指明 「client」 这一术语没有任何具体技术实现的约束，所以不论是在服务器、桌面平台还是终端设备上运行的各类程序，都是可以的。
+客户端，一个在 `resource owner` 的授权下代其请求受保护资源的应用。RFC6749 特别指明「client」这一术语没有任何具体技术实现的约束，所以不论是在服务器、桌面平台还是终端设备上运行的各类程序，都是可以的。
 
 - authorization server
 
@@ -74,11 +74,11 @@ OAuth 2.0 也没有规定 `authorization server` 和 `resource server` 之间应
                   图 1：逻辑工作流程
 </font></pre>
 
-OAuth 2.0 定义了多种工作模式以应用不同场景，但逻辑上它们的工作流程都可以抽象为上图。此图描述了各角色间如何交互：
+OAuth 2.0 定义了多种工作模式以应用不同场景，但逻辑上它们的工作流程可以统一地抽象为上图，此图描述了各角色间如何交互：
 
-  (A)   `client` 请求来自 `resource owner` 的授权。授权请求可以直接地发往 `resouce owner`（正如图中所示），也可以间接地，通过 `authorization server` 作为中介来处理。
+  (A)   `client` 请求来自 `resource owner` 的授权。授权请求可以直接地发往 `resouce owner`（正如图中所示），也可以间接地通过 `authorization server` 作为中介来处理。
 
-  (B)   `client` 获得 `resource owner` 的授权许可（`authorization grant`）。这里，许可模式（`grant type`）取决于 `client` 请求中的参数以及 `authorization server` 侧是否支持，可以是 RFC 中定义的四种之一，也可以是自定扩展方式。详见后文。
+  (B)   `client` 获得 `resource owner` 的授权许可（`authorization grant`）。这里许可模式（`grant type`）取决于 `client` 请求中的参数以及 `authorization server` 侧是否支持，可以是 RFC 中定义的四种之一，也可以是自定义扩展方式。详见后文。
 
 注解：在不同工作模式下，`resource owner` 可以使用其凭证直接响应 `client` 的访问请求（这将暴露其凭证给 `client` 所属的第三方或所在的应用程序环境），也可以转而在独立的 `authorization server` （即所谓的抽象授权层）处处理访问请求。显然，这两种方式有着不同的安全等级。
 
@@ -94,7 +94,7 @@ OAuth 2.0 定义了多种工作模式以应用不同场景，但逻辑上它们�
 
 `authorization grant` （授权许可），是一个代表 `resource owner` 对受保护资源进行了授权的凭据，被 `client` 使用来获取访问资源的 `access token`。OAuth 2.0 定义了四种类型（`type`）的 `authorization grant`，包括：`authorization code`、`implicit`、`resource owner password credentials` 和 `client credentials`。字面上看，它们的区别在于有的直接使用 `resource owner` 的账户口令来授权，有的采用间接方式授权，而有的只用 `client` 身份即可获得访问授权。此外，OAuth 2.0 还支持[扩展的许可类型](https://tools.ietf.org/html/rfc6749#section-4.5)，受限篇幅本文不做介绍。
 
-回顾逻辑工作流图可以看到，`authorization grant` 被用于 `(B)`、`(C)` 两个步骤，实际工作流中则分别对应有四种 「flow」。其中有些工作流程简单、有些相对复杂，有些具有 OAuth 2.0 全部安全属性而有些则安全性欠佳。这部分内容在章节[「四种授权模式（grant types）及工作流」](#四种授权模式（grant types）及工作流)会详细展开介绍。
+回顾逻辑工作流图可以看到，`authorization grant` 被用于 `(B)`、`(C)` 两个步骤，实际工作流中则分别对应有四种「flow」。其中有些工作流程简单、有些相对复杂，有些具有 OAuth 2.0 全部安全属性而有些则安全性欠佳。这部分内容在章节[「四种授权模式及工作流」](#四种授权模式及工作流)会详细展开介绍。
 
 ### Access Token
 
@@ -171,18 +171,18 @@ OAuth 2.0 定义了多种工作模式以应用不同场景，但逻辑上它们�
 
 接入 OAuth 2.0 协议之前，要向 `authorization Server` 注册 `client`，使 `authorization Server` 能提前获知 `clients` 的信息以做更细粒度的访问控制，至于通过何种渠道注册并不在规范范畴内定义，通常情况是用户在 HTML 表单中提交注册操作。而注册的内容，OAuth 2.0 认为**应该**包括：
 
-- 指定 `client type`，正如本文下一节 [「Client Type」](#Client Type & Client Authentication) 所述的
+- 指定 `client type`，正如本文下一节 [「Client Type」](#Client-Type-and-Client-Authentication) 所述的
 - 提供 `client` 的 `redirection URI`
 
 重定向 URI（`redirection URI`）是标识可以接受响应的一个地址，无论是 `client`、`user-agent` 还是 `authorization server`，都会使用这种地址跳转技术来发送或接受消息，这种行为类似于软件开放中的 callback：请求者留下一个重定向地址，响应者则通过这一地址发送准备好的响应。在 OAuth 2.0 你将多次看到它。详细参考 [rfc6749#section-3.1.2](https://tools.ietf.org/html/rfc6749#section-3.1.2）
 
 - `authorization server` 要求的任何其他信息，如应用名称、网站地址、描述、logo 图片和接受的法律条款等等
 
-### Client Type & Client Authentication
+### Client Type and Client Authentication
 
 OAuth 2.0 身份信息是否机密两种类型的 `client`
 
-#### confidential client & client authentication
+#### confidential client
 
 具备安全地保管客户端凭证的能力的 `client` ，例如由安全服务器实现的程序。一个 `client` 是 `confidential ` 的，意味着 `authorization server` 出于安全需求，会（且[必须](https://tools.ietf.org/html/rfc6749#section-3.2.1)）对 `client` 执行满足其安全要求的认证措施，而 `client` 用于认证的身份凭证可以是口令、公私钥对等等。
 
@@ -192,7 +192,7 @@ OAuth 2.0 身份信息是否机密两种类型的 `client`
 - 可以对 compromised 的 `client ` 进行吊销，从而避免攻击者滥用盗取的 `refresh token`，至于如何吊销，禁用或改变某个 `client` 的身份凭证均可。很明显，禁用/改变单个 `client` 的身份凭证比吊销一整套 `refresh token` 要来得快捷。
 - 带来认证管理的最佳实践，因为认证管理一般要求定期轮转身份凭证（`periodic credential rotation`）。定期轮转一整套的 `refresh token` 要比轮转单独的 `client` 身份凭证要复杂得多。
 
-#### public client & client authentication
+#### public client
 
 缺乏安全保管凭证的能力的 `client`，例如安装到最终用户设备的软件。authorization server 可选（`MAY`）和 `public client` 建立身份认证措施。然而，此时 `authorization server` 一定不能（`MUST NOT`) 为了辨识 `client` 身份而信赖 `public client` 的认证结果。
 
