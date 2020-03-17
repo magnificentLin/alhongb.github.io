@@ -278,35 +278,35 @@ OAuth 2.0 也使用 `endpoint` 来描述不同角色的不同功能接口，整�
 
 `authorization code` 模式是为私密型 `client` 定制的，流程如下图所示
 
-<pre><font face="monospace">     +----------+
-     | Resource |
-     |   Owner  |
-     |          |
-     +----------+
-          ^
-          |
-         (B)
-     +----|-----+          Client Identifier      +---------------+
-     |         -+----(A)-- & Redirection URI ---->|               |
-     |  User-   |                                 | Authorization |
-     |  Agent  -+----(B)-- User authenticates --->|     Server    |
-     |          |                                 |               |
-     |         -+----(C)-- Authorization Code ---<|               |
-     +-|----|---+                                 +---------------+
-       |    |                                         ^      v
-      (A)  (C)                                        |      |
-       |    |                                         |      |
-       ^    v                                         |      |
-     +---------+                                      |      |
-     |         |>---(D)-- Authorization Code ---------'      |
-     |  Client |          & Redirection URI                  |
-     |         |                                             |
-     |         |<---(E)----- Access Token -------------------'
-     +---------+       (w/ Optional Refresh Token)
+<pre><font face="monospace">     +----------+
+     | Resource |
+     |   Owner  |
+     |          |
+     +----------+
+          ^
+          |
+         (B)
+     +----|-----+          Client Identifier      +---------------+
+     |         -+----(A)-- & Redirection URI ---->|               |
+     |  User-   |                                 | Authorization |
+     |  Agent  -+----(B)-- User authenticates --->|     Server    |
+     |          |                                 |               |
+     |         -+----(C)-- Authorization Code ---<|               |
+     +-|----|---+                                 +---------------+
+       |    |                                         ^      v
+      (A)  (C)                                        |      |
+       |    |                                         |      |
+       ^    v                                         |      |
+     +---------+                                      |      |
+     |         |>---(D)-- Authorization Code ---------'      |
+     |  Client |          & Redirection URI                  |
+     |         |                                             |
+     |         |<---(E)----- Access Token -------------------'
+     +---------+       (w/ Optional Refresh Token)
 
-    注：由于要穿过 user-agent，步骤（A），（B）和（C）的线间断为两部分。
+      注：由于要穿过 user-agent，步骤（A），（B）和（C）的线间断为两部分。
 
-                     图 3：Authorization Code Flow
+                  图 3：Authorization Code Flow
 </font></pre>
 
 图 3 描述的工作流程包含以下步骤：
@@ -332,42 +332,41 @@ OAuth 2.0 也使用 `endpoint` 来描述不同角色的不同功能接口，整�
 
 在 `implicit` 模式， `resource owner` 许可访问后， `client` 会被直接授予一个 `access token` 而不是“中间码”（`authorization code`）。这是和 `authorization code` 模式相比最大的区别。
 
-<pre><font face="monospace">     +----------+
-     | Resource |
-     |  Owner   |
-     |          |
-     +----------+
-          ^
-          |
-         (B)
-     +----|-----+          Client Identifier     +---------------+
-     |         -+----(A)-- & Redirection URI --->|               |
-     |  User-   |                                | Authorization |
-     |  Agent  -|----(B)-- User authenticates -->|     Server    |
-     |          |                                |               |
-     |          |<---(C)--- Redirection URI ----<|               |
-     |          |          with Access Token     +---------------+
-     |          |            in Fragment
-     |          |                                +---------------+
-     |          |----(D)--- Redirection URI ---->|   Web-Hosted  |
-     |          |          without Fragment      |     Client    |
-     |          |                                |    Resource   |
-     |     (F)  |<---(E)------- Script ---------<|               |
-     |          |                                +---------------+
-     +-|--------+
-       |    |
-      (A)  (G) Access Token
-       |    |
-       ^    v
-     +---------+
-     |         |
-     |  Client |
-     |         |
-     +---------+
+<pre><font face="monospace">     +----------+
+     | Resource |
+     |  Owner   |
+     |          |
+     +----------+
+          ^
+          |
+         (B)
+     +----|-----+          Client Identifier     +---------------+
+     |         -+----(A)-- & Redirection URI --->|               |
+     |  User-   |                                | Authorization |
+     |  Agent  -|----(B)-- User authenticates -->|     Server    |
+     |          |                                |               |
+     |          |<---(C)--- Redirection URI ----<|               |
+     |          |          with Access Token     +---------------+
+     |          |            in Fragment
+     |          |                                +---------------+
+     |          |----(D)--- Redirection URI ---->|   Web-Hosted  |
+     |          |          without Fragment      |     Client    |
+     |          |                                |    Resource   |
+     |     (F)  |<---(E)------- Script ---------<|               |
+     |          |                                +---------------+
+     +-|--------+
+       |    |
+      (A)  (G) Access Token
+       |    |
+       ^    v
+     +---------+
+     |         |
+     |  Client |
+     |         |
+     +---------+
+         注：由于要穿过 user-agent，步骤（A）和（B）的线间断为两部分。
 
-   注：由于要穿过 user-agent，步骤（A）和（B）的线间断为两部分。
-
-                       图 4: Implicit Grant Flow
+                       图 4: Implicit Grant Flow
 </font></pre>
 
 注：由于没有用 `authortization code` 交换 `token` 这一步骤，`client` 不和 `authortization server` 直接交互；`implicit` 模式下 `authorization server` 不认证  `client`，而是仅用c重定向 URI 来标识 `client` 身份，因此确保 URI 的完整性是 `implicit` 模式的安全关键。
