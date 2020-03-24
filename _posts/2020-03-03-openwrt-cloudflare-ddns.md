@@ -9,9 +9,13 @@ seo:
 
 本文演示了如何在 OpenWrt 上设置 DDNS，接入 Cloudflare 提供的 DDNS 服务。
 
-## 获取 API key
+## 获取 Cloudflare API key
 
-Cloudflare DDNS API 是 RESTful API，调用时必须使用 API key。前往 [My account](https://dash.cloudflare.com/profile/api-tokens) 页面获取自己的 API key即可。
+Cloudflare DDNS API 是 RESTful API，调用时必须使用帐户对应的 API key，方法是前往 [My account](https://dash.cloudflare.com/profile/api-tokens) 页面获取。例如
+
+```
+ebcdefghijklmnopqrstuvwxyze1234567890
+```
 
 ## 安装 ddns 软件包
 
