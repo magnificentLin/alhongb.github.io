@@ -204,11 +204,11 @@ openmediavault 预置安装了 Nginx（被其管理界面使用），我们直�
 vim /etc/nginx/sites-available/nextcloud
 
 server {
-    #遵循一端口仅配置一次规则，如果你 openmediavault WEB 界面 80 或 443 端口的 Nginx 监听语句已经开启了 `ipv6only=off`，下面就要去除掉对应的 `ipv6only=off`
+    #常规 HTTP/HTTPS 端口。遵循一端口仅配置一次规则，如果你 openmediavault WEB 界面 80 或 443 端口的 Nginx 监听语句已经开启了 `ipv6only=off`，下面就要去除掉对应的 `ipv6only=off`
     listen [::]:80 ipv6only=off;
     listen [::]:443 ipv6only=off ssl http2;
     
-    #运营商封禁 80/443 端口，如果服务要公网访问，你可能需要额外监听别的端口
+    #应对运营商封禁 80/443 端口。如果服务需要公网访问，要额外监听别的端口
     #listen [::]:8443 ipv6only=off ssl http2;
 
     server_name nextcloud.linhongbo.com;
@@ -239,9 +239,7 @@ server {
 - `proxy_set_header X-Real-IP $remote_addr` 和 `proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for` 指示 Nginx 发起反向代理请求时增加原始 IP 字段到 HTTP Header，这对一些依赖源 IP 来认证客户端的 Web 服务非常重要，例如 Emby，由于反向代理时 Nginx 位于 localhost 或局域网，如不设置此参数 Emby 将认为请求是来源于局域网，从而造成安全功能误判。因此建议所有被代理服务配置上此选项。
 - `http2` 支持 http2，加速网站加载。注意仅 HTTPS 支持此特性。
 
-另外说明一下端口配置策略。可以看到我的配置仅保留 `443` 端口（HTTPS 通道）的反向代理，这是因为博主本地 `80` 端口已被运营商封锁（`443` 其实也一样），再打开 HTTP 端口的反向代理不会带来任何访问上的裨益（网址仍要指定端口才能访问）。如果你的运营商许可 `80` 端口，只需再新增一个 `server` block，`listen` 改为 `80` 端口，去掉 ssl 相关参数即可。
-
-将其拷贝到 /etc/nginx/sites-enabled 目录使能起来，这里用软链接
+将上述配置文件拷贝到 `/etc/nginx/sites-enabled` 目录使能起来，这里应用软链接
 
 ```sh
 ln -s /etc/nginx/sites-available/nextcloud /etc/nginx/sites-enabled/nextcloud
@@ -253,7 +251,7 @@ ln -s /etc/nginx/sites-available/nextcloud /etc/nginx/sites-enabled/nextcloud
 nginx -s reload
 ```
 
-最后，在路由器的端口转发规则中增加一条，wan:8443 -> openmediavault:443 的 tcp 规则，就可以通过外网访问你的 Nextcloud 站点了，这里选择 `8443` 是因为博主本地环境，运营商业已封锁了 `443` 端口。
+最后，为了能被公网访问你的 Nextcloud 站点，在路由器的端口转发规则中增加一条 wan:8443 -> openmediavault:443 的 tcp 规则，这里选择 `8443` 是因为博主的运营商业已封锁了 `443` 端口。此外不再配置 HTTP（80）端口的转发规则，因为不会带来任何访问上的裨益（网址仍要指定端口才能访问）。
 
 其他的 Web 服务反向代理配置同理。
 
