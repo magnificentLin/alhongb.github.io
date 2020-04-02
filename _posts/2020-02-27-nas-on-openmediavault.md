@@ -204,8 +204,12 @@ openmediavault 预置安装了 Nginx（被其管理界面使用），我们直�
 vim /etc/nginx/sites-available/nextcloud
 
 server {
+    #遵循一端口仅配置一次规则，如果你 openmediavault WEB 界面 80 或 443 端口的 Nginx 监听语句已经开启了 `ipv6only=off`，下面就要去除掉对应的 `ipv6only=off`
     listen [::]:80 ipv6only=off;
     listen [::]:443 ipv6only=off ssl http2;
+    
+    #运营商封禁 80/443 端口，如果服务要公网访问，你可能需要额外监听别的端口
+    #listen [::]:8443 ipv6only=off ssl http2;
 
     server_name nextcloud.linhongbo.com;
     
@@ -221,15 +225,15 @@ server {
         proxy_set_header X-Forwarded-Proto $scheme;
     }
 }
+
 ```
 
 其中，
 
-- `ipv6only=off` 表示监听的 ipv6 socket 既可以处理 ipv6 也可以处理 ipv4 数据包（这是 Linux 的一个特性，新版 Ningx 默认为 on），这样就可以省掉 `listen 80`、`listen 443`，使配置文件更简洁。但要注意这种写法要求 `ipv6only=off` 在所有 Nginx `server` 块中**必须**且**只能**出现一次，否则会导致 `Address already in use` 错误（两个端口同时处理 ipv4 请求）或无法处理 ipv4 请求。此外由于 openmediavault 自身 80 端口或启用后的 443 端口已经配置了 `ipv6only=off`，额外的 Virtual Host 配置就不需且不能再配置 `ipv6only=off` 了。
-
+- `ipv6only=off` 表示监听的 ipv6 socket 既可以处理 ipv6 也可以处理 ipv4 数据包（这是 Linux 的一个新特性，新版 Ningx 默认为 `on`，即在该端口上仅监听 ipv6 数据包）。这个选项可以使配置更简洁，而无需（且不能）额外配置 ipv4 监听语句，形如 `listen 0.0.0.0:80`。但要注意如果有多个 `server` 块监听同一端口，这种写法要求该端口的 `ipv6only=off` 选项**必须**且**只能**出现一次，否则会导致 `Address already in use` 错误（两个端口同时处理 ipv4 请求）或无法处理 ipv4 请求。也就是说由于 openmediavault WEB 界面自身监听的 80 端口和 443 端口（如果启用 HTTPS）在其配置文件中已经配置了 `ipv6only=off`，遵循只能出现一次的规则，你额外的 Virtual Host 配置中 80 和 443 端口就不需且不能再配置 `ipv6only=off` 了。
 - `server_name` 指定服务对应的域名
-- ` ssl_certificate` 和 `ssl_certificate_key` 分别填写先前申请的 Let's Encrypt 证书、私钥文件；
-- `proxy_ssl_verify off`表示关闭 Nginx 到上游服务器（Nextcloud 容器服务）的 SSL/TLS 校验，由于我是反向代理到 Nextcloud 容器的 HTTPS 服务，因此该选项必须。
+- `ssl_certificate` 和 `ssl_certificate_key` 分别填写先前申请的 Let's Encrypt 证书、私钥文件；
+- `proxy_ssl_verify off` 表示关闭 Nginx 到上游服务器（Nextcloud 容器服务）的 SSL/TLS 校验，由于我是反向代理到 Nextcloud 容器的 HTTPS 服务，因此该选项必须。
 - `proxy_set_header Host $http_host` 表示反向代理时替换掉 HTTP Header 中的 host 参数，这对 Nextcloud 是必要的，否则会报域名不被信任的错误；
 - `proxy_pass https://localhost:9443` 设置被代理容器监听的本地回环地址和端口号；
 - `proxy_set_header X-Real-IP $remote_addr` 和 `proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for` 指示 Nginx 发起反向代理请求时增加原始 IP 字段到 HTTP Header，这对一些依赖源 IP 来认证客户端的 Web 服务非常重要，例如 Emby，由于反向代理时 Nginx 位于 localhost 或局域网，如不设置此参数 Emby 将认为请求是来源于局域网，从而造成安全功能误判。因此建议所有被代理服务配置上此选项。
