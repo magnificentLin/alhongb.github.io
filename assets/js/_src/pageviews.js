@@ -3,7 +3,7 @@
  *
  * Dependences:
  *   - jQuery
- *   - countUp.js(https://github.com/inorganik/countUp.js)
+ *   - countUp.js <https://github.com/inorganik/countUp.js>
  *
  * v2.0
  * https://github.com/cotes2020/jekyll-theme-chirpy
@@ -11,9 +11,9 @@
  * MIT License
  */
 
-function countUp(min, max, dest) {
+function countUp(min, max, destId) {
   if (min < max) {
-    var numAnim = new CountUp(dest, min, max);
+    var numAnim = new CountUp(destId, min, max);
     if (!numAnim.error) {
       numAnim.start();
     } else {
@@ -21,6 +21,7 @@ function countUp(min, max, dest) {
     }
   }
 }
+
 
 function countPV(path, rows) {
   /* path permalink looks like: '/posts/post-title/' */
@@ -43,6 +44,21 @@ function countPV(path, rows) {
 }
 
 
+function tacklePV(rows, path, elem, hasInit) {
+  var count = countPV(path, rows);
+  count = (count == 0 ? 1 : count);
+
+  if (!hasInit) {
+    elem.text(new Intl.NumberFormat().format(count));
+  } else {
+    var initCount = parseInt(elem.text().replace(/,/g, ''));
+    if (count > initCount) {
+      countUp(initCount, count, elem.attr('id'));
+    }
+  }
+}
+
+
 function displayPageviews(data) {
   if (data === undefined) {
     return;
@@ -54,70 +70,155 @@ function displayPageviews(data) {
   if ($("#post-list").length > 0) { // the Home page
     $(".post-preview").each(function() {
       var path = $(this).children("h1").children("a").attr("href");
-      var count = countPV(path, rows);
-      count = (count == 0 ? 1 : count);
-
-      if (!hasInit) {
-        $(this).find('.pageviews').text(count);
-      } else {
-        var initCount = parseInt($(this).find('.pageviews').text());
-        if (count > initCount) {
-          countUp(initCount, count, $(this).find('.pageviews').attr('id'));
-        }
-      }
+      tacklePV(rows, path, $(this).find('.pageviews'), hasInit);
     });
 
   } else if ($(".post").length > 0) { // the post
     var path = window.location.pathname;
-    var count = countPV(path, rows);
-    count = (count == 0 ? 1 : count);
-
-    if (!hasInit) {
-      $('#pv').text(count);
-    } else {
-      var initCount = parseInt($('#pv').text());
-      if (count > initCount) {
-        countUp(initCount, count, 'pv');
-      }
-    }
+    tacklePV(rows, path, $('#pv'), hasInit);
   }
-
 }
 
 
 var getInitStatus = (function() {
   var hasInit = false;
   return function() {
-    if (hasInit) {
-      return true;
-    } else {
+    let ret = hasInit;
+    if (!hasInit) {
       hasInit = true;
-      return false;
     }
+    return ret;
   }
 })();
 
 
+var PvCache = (function() {
+  const KEY_PV = "pv";
+  const KEY_CREATION = "pv-created-date";
+  const KEY_PV_TYPE = "pv-type";
+
+  var PvType = {
+    ORIGIN: "origin",
+    PROXY: "proxy"
+  };
+
+  function get(key) {
+    return localStorage.getItem(key);
+  }
+
+  function set(key, val) {
+    localStorage.setItem(key, val);
+  }
+
+  return {
+    getData: function() {
+      return JSON.parse(localStorage.getItem(KEY_PV) );
+    },
+    saveOriginCache: function(pv) {
+      set(KEY_PV, pv);
+      set(KEY_PV_TYPE, PvType.ORIGIN );
+      set(KEY_CREATION, new Date().toJSON() );
+    },
+    saveProxyCache: function(pv) {
+      set(KEY_PV, pv);
+      set(KEY_PV_TYPE, PvType.PROXY );
+      set(KEY_CREATION, new Date().toJSON() );
+    },
+    isOriginCache: function() {
+      return get(KEY_PV_TYPE) == PvType.ORIGIN;
+    },
+    isProxyCache: function() {
+      return get(KEY_PV_TYPE) == PvType.PROXY;
+    },
+    isExpired: function() {
+      if (PvCache.isOriginCache() ) {
+        let date = new Date(get(KEY_CREATION));
+        date.setDate(date.getDate() + 7); // origin-data is updated every 7 days
+        return Date.now() >= date.getTime();
+
+      } else if (PvCache.isProxyCache() ) {
+        let date = new Date(get(KEY_CREATION) );
+        date.setHours(date.getHours() + 1); // proxy-data is updated every hour
+        return Date.now() >= date.getTime();
+      }
+      return false;
+    },
+    getAllPagevies: function() {
+      return PvCache.getData().totalsForAllResults["ga:pageviews"];
+    },
+    newerThan: function(pv) {
+      return PvCache.getAllPagevies() > pv.totalsForAllResults["ga:pageviews"];
+    }
+  };
+
+})(); // PvCache
+
+
+function fetchOriginPageviews(pvData) {
+  if (pvData === undefined) {
+    return;
+  }
+  displayPageviews(pvData);
+  PvCache.saveOriginCache(JSON.stringify(pvData));
+}
+
+
+function fetchProxyPageviews() {
+  let proxy = JSON.parse(proxyData); // see file '/assets/data/pv-data.json'
+  $.ajax({
+    type: 'GET',
+    url: proxy.url,
+    dataType: 'jsonp',
+    jsonpCallback: "displayPageviews",
+    success: function(data, textStatus, jqXHR) {
+      PvCache.saveProxyCache(JSON.stringify(data));
+    },
+    error: function(jqXHR, textStatus, errorThrown) {
+      console.log("Failed to load pageviews from proxy server: " + errorThrown);
+    }
+  });
+}
+
+
 $(function() {
-  // load pageview if this page has .pageviews
+
   if ($('.pageviews').length > 0) {
 
-    // Get data from daily cache.
-    $.getJSON('/assets/data/pageviews.json', displayPageviews);
+    let originPvData = pageviews ? JSON.parse(pageviews) : undefined;
+    let cache = PvCache.getData();
 
-    $.getJSON('/assets/data/proxy.json', function(meta) {
-      $.ajax({
-        type: 'GET',
-        url: meta.proxyUrl,
-        dataType: 'jsonp',
-        jsonpCallback: "displayPageviews",
-        error: function(jqXHR, textStatus, errorThrown) {
-          console.log("Failed to load pageviews from proxy server: " + errorThrown);
+    if (cache) {
+      if (PvCache.isExpired()) {
+        if (PvCache.isProxyCache() ) {
+          if (originPvData) {
+            if (PvCache.newerThan(originPvData)) {
+              displayPageviews(cache);
+            } else {
+              fetchOriginPageviews(originPvData);
+            }
+          }
+
+          fetchProxyPageviews();
+
+        } else if (PvCache.isOriginCache() ) {
+          fetchOriginPageviews(originPvData);
+          fetchProxyPageviews();
         }
-      });
 
-    });
+      } else { // still valid
+        displayPageviews(cache);
 
-  } // endif
+        if (PvCache.isOriginCache() ) {
+          fetchProxyPageviews();
+        }
+
+      }
+
+    } else {
+      fetchOriginPageviews(originPvData);
+      fetchProxyPageviews();
+    }
+
+  }
 
 });
