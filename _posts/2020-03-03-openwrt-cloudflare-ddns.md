@@ -4,7 +4,7 @@ categories: [Tutorial, OpenWrt]
 tags: [OpenWrt, DDNS]
 layout: post
 seo:
-  date_modified: 2020-03-03 23:59:59 +0800
+  date_modified: 2020-03-24 21:13:55 +0800
 ---
 
 本文演示了如何在 OpenWrt 上设置 DDNS，接入 Cloudflare 提供的 DDNS 服务。

@@ -3,7 +3,7 @@ title: ESXi 安装&配置 OpenWrt
 categories: [Tutorial, ESXi]
 tags: [ESXi, OpenWrt]
 seo:
-  date_modified: 2020-03-15 23:06:16 +0800
+  date_modified: 2020-03-16 09:11:13 +0800
 ---
 
 基于 ESXi X86 虚拟机设备构建 OpenWrt 路由器是一种兼顾性能和敏捷性的软路由解决方案。本文详细介绍了如何在 vSphere ESXi 6.7 下部署最新版本的 OpenWrt。
