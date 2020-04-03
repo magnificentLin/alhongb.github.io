@@ -198,17 +198,17 @@ sudo docker run -it --rm --name certbot \
 
 openmediavault 预置安装了 Nginx（被其管理界面使用），我们直接复用这个 Nginx 作为反向代理服务器。
 
-首先，创建被代理 Web 服务对应的 Virtul Host 配置文件，例如 Nextcloud
+以配置 Nextcloud 为例，首先创建 Virtul Host 配置文件：
 
 ```sh
 vim /etc/nginx/sites-available/nextcloud
 
 server {
-    #常规 HTTP/HTTPS 端口。遵循一端口仅配置一次规则，如果你 openmediavault WEB 界面 80 或 443 端口的 Nginx 监听语句已经开启了 `ipv6only=off`，下面就要去除掉对应的 `ipv6only=off`
+    #常规 HTTP/HTTPS 端口。遵循一端口全局仅配置一次 ipv6=off 规则，例如 openmediavault 的 80 或 443 端口的配置语句已经包含了 `ipv6only=off`，下面就要去除掉对应的 `ipv6only=off`
     listen [::]:80 ipv6only=off;
     listen [::]:443 ipv6only=off ssl http2;
     
-    #应对运营商封禁 80/443 端口。如果服务需要公网访问，要额外监听别的端口
+    #出于安全考虑，如果该服务需要被公网访问，额外监听别的端口
     #listen [::]:8443 ipv6only=off ssl http2;
 
     server_name nextcloud.linhongbo.com;
@@ -251,9 +251,10 @@ ln -s /etc/nginx/sites-available/nextcloud /etc/nginx/sites-enabled/nextcloud
 nginx -s reload
 ```
 
-最后，为了能被公网访问你的 Nextcloud 站点，在路由器的端口转发规则中增加一条 wan:8443 -> openmediavault:443 的 tcp 规则，这里选择 `8443` 是因为博主的运营商业已封锁了 `443` 端口。此外不再配置 HTTP（80）端口的转发规则，因为不会带来任何访问上的裨益（网址仍要指定端口才能访问）。
+### 配置端口转发（公网访问）
 
-其他的 Web 服务反向代理配置同理。
+最后，为了能在公网访问 openmediavault 上的 WEB 服务，需要在路由器的防火墙规则中增加一条 WAN:8443 -> openmediavault:8443 的 tcp 端口转发规则，这里 WAN 域端口选择 `8443` 而非 HTTPS 默认的 443 端口是因为该端口已运营商防火墙封锁了。此外由于 80 端口亦被封锁，博主不再配置 HTTP（80）端口的转发规则，因为不会带来任何访问上的裨益（网址仍要指定端口才能访问）。
+
 
 ## 常见问题
 
