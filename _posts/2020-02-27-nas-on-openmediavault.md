@@ -1,5 +1,5 @@
 ---
-title: openmediavault 安装与应用配置
+title: 个人 NAS 搭建指南（下•软件篇）
 categories: [Tutorial, NAS]
 tags: [openmediavault]
 layout: post
@@ -120,6 +120,22 @@ Portainer 修改 `UID` 环境变量，设置为查询到的 `mediaonly` 用户 U
 
 上述做法的好处是你可以在 openmediavault 共享文件夹的 ACL 中配置 `mediaonly` 访问权限，限制 Emby Server 对私人数据目录的访问。(我的做法是去掉私有数据目录默认的 `users` 组访问权限，仅主用户有权访问，其中明确开放给 Emby Server 访问的媒体数据目录除外)
 
+### 使用域名访问容器
+
+默认情况下，我们会用 `IP:端口` 方式访问容器提供的 Web 服务，并且用端口号来区分不同的服务，这在容器数量较多时显得非常不优雅。
+
+有两种解决方案，分别适用不同场景：
+
+1. 如果你有公开域名并希望容器能够被公网访问，可以在域名 DNS 服务提供商中配置新的容器服务域名，并解析到可访问容器的公网 IP（这通常需要宽带运营商提供公网 IP，并且你已[配置好 DDNS](https://linhongbo.com/posts/openwrt-cloudflare-ddns/)）
+2. 如果你没有公开域名或仅在局域网访问容器服务，可以配置本地域名。具体方法不一，博主是在 OpenWrt 路由器中修改 `/etc/hosts` 文件完成的，形如：
+
+```
+192.168.0.2 portainer.linhongbo.com
+192.168.0.2 transmission.linhongbo.com
+192.168.0.2 openmediavault.linhongbo.com
+192.168.0.2 openwrt.linhongbo.com
+192.168.0.2 emby.linhongbo.com
+```
 ## 启用 HTTPS
 
 上面我已经运行了 3 个需要身份认证的 Web 服务（包括 Portainer），其中 Nextcloud 甚至还需要在公网上开放，如果连接通道走默认的 HTTP 协议，将十分不安全。因此有必要给这些服务升级 HTTPS 连接。但这很不容易，基本上要先申请到公开 CA 认证的 HTTPS 证书，然后一个个给这些服务配置上证书和私钥，启用 HTTPS 监听。这十分麻烦并不优雅。
@@ -251,10 +267,13 @@ ln -s /etc/nginx/sites-available/nextcloud /etc/nginx/sites-enabled/nextcloud
 nginx -s reload
 ```
 
-### 配置端口转发（公网访问）
+## 端口转发（公网访问）
 
 最后，为了能在公网访问 openmediavault 上的 WEB 服务，需要在路由器的防火墙规则中增加一条 WAN:8443 -> openmediavault:8443 的 tcp 端口转发规则，这里 WAN 域端口选择 `8443` 而非 HTTPS 默认的 443 端口是因为该端口已运营商防火墙封锁了。此外由于 80 端口亦被封锁，博主不再配置 HTTP（80）端口的转发规则，因为不会带来任何访问上的裨益（网址仍要指定端口才能访问）。
 
+## VPN
+
+VPN 可以在公网和家庭局域网之间创建隧道，从而容易访问内网的各项服务。很多路由器都提供了这项功能。如果你想使用 Shadowsocks 来替代 VPN，可以参考博主的这篇文章：[OpenWrt 安装 Shadowsocks Server](https://linhongbo.com/posts/shadowsocks-server-on-openwrt/)
 
 ## 常见问题
 
