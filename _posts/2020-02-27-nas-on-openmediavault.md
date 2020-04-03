@@ -7,26 +7,26 @@ seo:
   date_modified: 2020-03-03 10:57:51 +0800
 ---
 
-本文记录了博主在 openmediavault 上搭建个人 NAS 系统的详细过程，包括：安装配置 openmediavault、Docker；部署 Transmission BT 工具、Nextcloud 网盘等容器；配置 HTTP/HTTPS 反向代理和 Let's Encrypt 证书。
+本文记录了博主在 openmediavault 上搭建私人 NAS 的详细过程，包括：安装配置 openmediavault、Docker；部署 Transmission BT 工具、Nextcloud 网盘等容器；配置 HTTP/HTTPS 反向代理和 Let's Encrypt 证书。
 
 ## 安装 openmediavault
 
-安装过程没有什么特别的地方，与一般的 Linux 发行版一致：先在官网下载 ISO 文件，然后解压到 U 盘做成启动盘，引导启动安装界面即可。几个注意事项：
+openmediavault 安装与绝大部分 Linux 发行版一致：先在官网下载 ISO 文件，然后解压到 U 盘做成启动盘，设置 BIOS 引导到安装界面即可。几个注意事项：
 
-- 镜像最新版本是 5.0.5，但在安装完成后会自动升级到最新版本的 openmediavault
+- 在安装界面执行磁盘重新分区时，可能会报无法安装系统文件的错误，忽略错误重启一下即可
+- 网站提供的 openmediavault 镜像最新版本是 5.0.5，但安装完成后会自动升级到最新版本
 - 安装过程确保联网更新，避免出现网卡无法驱动的问题。更新源选择国内的节点，如清华，否则速度极慢
 - 安装过程语言选项可选择英文或中文，影响 Debian 和 openmediavault 的语言。建议选英文，因为 openmediavault 的时区、语言安装完成后很容易通过其界面更改
-- 安装过程磁盘重新分区后，可能会报无法安装系统文件的错，重启一下即可
 
 ## 创建共享文件夹
 
-安装完毕后就要创建可被外部访问的共享文件夹了，用 openmediavault 的图形界面来操作很简单，基本流程是：
+openmediavault 成功运行后，就可以用其 Web 图形界面组建 RAID 和创建可被外部访问的`共享文件夹`了，基本流程是：
 
 ```
 清除磁盘（可选）- 组建 RAID（可选）- 创建文件系统 - 挂载文件系统 - 添加共享文件夹 - 打开文件共享服务（可选）
 ```
 
-注意：默认的 `admin` 管理员用户不能用于访问共享文件夹，需要新建一个普通用户；所有的文件访问都应当通过 openmediavault 共享文件夹机制：主机外使用各种基于网络的文件共享服务，主机内使用 `/sharedfolders/yourfolder` 路径来访问共享文件夹。
+注意：默认的 `admin` 管理员用户不能用于访问共享文件夹，需要新建一个普通用户；所有共享文件访问都应当通过 openmediavault `共享文件夹`机制：主机外使用各种基于网络的文件共享服务，主机内使用 `/sharedfolders/yourfolder` 路径来访问共享文件夹。
 
 ## 安装 Docker 环境
 
@@ -40,15 +40,15 @@ seo:
 sudo wget -O - https://github.com/OpenMediaVault-Plugin-Developers/packages/raw/master/install | bash
 ```
 
-安装完毕后，直接在新增的 omv-extras 界面中点击按钮安装 Docker 即可
+安装完毕后，直接在新增的 `omv-extras` 界面中点击按钮安装 Docker 即可
 
 ### 安装 Portainer
 
-Portainer 是一个轻量级的 Docker 环境管理 UI，可以用来管理 docker 宿主机和 docker swarm 集群。Portainer 本身也是以容器运行，因此安装过程就是创建和运行一个容器。
+Portainer 是一个轻量级的 Docker 图形化管理工具，可以用来管理宿主机和 Docker Swarm 集群。Portainer 本身也是以容器运行，因此安装过程就是创建和运行一个容器。
 
 omv-extras 也提供了 Portainer 的安装界面，直接用它来安装即可。
 
-安装完成后访问 *openmediavualt_host_ip*:9000 即可访问其 Web 界面，首次登录需要创建一个管理员用户，然后会让你选择要连接的 docker 环境，这里我们选择 `Local`，即先前本地安装的 docker 环境。
+安装完成后访问 *openmediavualt_host_ip*:9000 即可访问其 Web 界面，首次登录需要创建一个管理员用户，然后会让你选择要连接的 Docker 环境，这里我们选择 `Local`，即此前安装的 Docker。
 
 ## 部署 NAS 常用应用容器
 
