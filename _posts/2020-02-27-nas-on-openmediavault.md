@@ -9,6 +9,24 @@ seo:
 
 本文记录了博主在 openmediavault 上搭建私人 NAS 的详细过程，包括：安装配置 openmediavault、Docker；部署 Transmission BT 工具、Nextcloud 网盘等容器；配置 HTTP/HTTPS 反向代理和 Let's Encrypt 证书。
 
+## NAS 系统选择
+
+- Synology DSM
+
+适合无技术背景或希望开箱即用的用户。博主不选择的原因：
+
+   1. 相对臃肿，不够简洁
+   2. 每块磁盘上都会安装 DSM，包括存储安装的软件及其数据，导致用户存储和操作系统耦合，尤其是频繁的读写影响每块硬盘的休眠功能。
+
+- FreeNAS
+
+对硬件要求比较高，尤其是内存最低要求 8G，其未来的目标用户应该主要是企业，不选。
+
+- openmediavault
+
+基于 Debian Linux，开源免费。openmediavault 面向的就是家庭用户和小型办公环境，是对 Linux 熟悉又追求最小化安装
+的人的首选。
+
 ## 安装 openmediavault
 
 openmediavault 基于 Debian，因此安装过程与绝大部分 Linux 发行版没什么两样：先在[官网](https://www.openmediavault.org/?page_id=77)下载 ISO 文件，解压到 U 做成启动盘，最后引导设备启动到安装程序完成安装。几个注意事项：
