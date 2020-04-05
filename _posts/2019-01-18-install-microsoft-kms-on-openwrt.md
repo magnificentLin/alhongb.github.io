@@ -36,14 +36,14 @@ Check "`Auto activate`" and "`Enable`" options in the LuCI app then click "`Save
 
 ## Activate your Office 2016
 
-Run `cmd` as administrator on your Windows, and then execute following commands. Note that you should replace the IP (in this case is `192.168.1.1`)  with your own OpenWrt LAN IP.
+Run `cmd` as administrator on your Windows, and then execute following commands. Note that you should replace the IP (in this case is `192.168.0.1`)  with your own OpenWrt LAN IP.
 
 ```sh
 ## for 32bits Office:
 cd C:\Program Files (x86)\Microsoft Office\Office16 
 
 ## for 64bits Office: 
-cd C:\Program Files\Microsoft Office\Office16 cscript 
+cd C:\Program Files\Microsoft Office\Office16
 
-ospp.vbs /sethst:192.168.1.1
+cscript ospp.vbs /sethst:192.168.0.1
 ```
