@@ -1,5 +1,5 @@
 ---
-title: 基于 openmediavault 搭建个人 NAS
+title: 个人 NAS 搭建指南
 categories: [Tutorial, NAS]
 tags: [openmediavault]
 layout: post
@@ -8,6 +8,20 @@ seo:
 ---
 
 本文记录了博主在 openmediavault 上搭建私人 NAS 的详细过程，包括：安装配置 openmediavault、Docker；部署 Transmission BT 工具、Nextcloud 网盘等容器；配置 HTTP/HTTPS 反向代理和 Let's Encrypt 证书。
+
+## 硬件选择
+
+截至博文发布，博文博主用过的 NAS 硬件有小马V5（退役）和蜗牛星际（现役），结合实践博主给读者提一些建议，在选购硬件时应当考虑：
+
+- 专用设备
+
+如果你的 NAS 核心功能是安全存储个人数据，那么长期稳定运行是一大要素，不建议使用虚拟化技术（意味着一设备多用途）、树莓派等非专用设备来搭建 NAS，最后你会发现这些方案基本上都是过渡方案。
+
+- 低功耗
+
+低功耗不仅使设备绿色清洁，还会带来更好的散热性能，这些都是长期运行的基础
+
+- 至少 3 盘位
 
 ## NAS 系统选择
 
@@ -26,6 +40,8 @@ seo:
 
 基于 Debian Linux，开源免费。openmediavault 面向的就是家庭用户和小型办公环境，是对 Linux 熟悉又追求最小化安装
 的人的首选。
+
+另外，所有的 NAS 系统都有物理机裸装和运行在 ESXi 等虚拟化平台上两种区分，但考虑到虚拟机对 S.M.A.R.T、磁盘磁盘休眠等需要直通的特性支持不好，而这些功能是 NAS 长期稳定、低功耗运行的核心，因此强烈建议不要使用虚拟化安装 NAS。
 
 ## 安装 openmediavault
 
