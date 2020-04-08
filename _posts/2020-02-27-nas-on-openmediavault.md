@@ -1,5 +1,5 @@
 ---
-title: openmediavault NAS 搭建指南
+title: openmediavault 个人 NAS 搭建指南
 categories: [Tutorial, NAS]
 tags: [openmediavault]
 layout: post
@@ -7,11 +7,11 @@ seo:
   date_modified: 2020-04-03 08:38:29 +0800
 ---
 
-本文记录了博主在 openmediavault 上搭建私人 NAS 的详细过程，包括：安装配置 openmediavault、Docker；部署 Transmission BT 工具、Nextcloud 网盘等容器；配置 HTTP/HTTPS 反向代理和 Let's Encrypt 证书。
+本文详细记录了在 openmediavault 上搭建私人 NAS 的过程，包括：安装配置 openmediavault、Docker；部署 Transmission BT 工具、Nextcloud 网盘等容器；配置 HTTP/HTTPS 反向代理和 Let's Encrypt 证书，最终实现个人 NAS 的搭建。
 
 ## 硬件选择
 
-本人用过的 DIY NAS 硬件有小马 V5（已退役）和蜗牛星际，这里提一些硬件选购建议，供读者参考：
+博主用过的 DIY NAS 硬件有小马 V5（已退役）和蜗牛星际，这里提一些硬件选购建议，供读者参考：
 
 - 专用设备
 
@@ -23,7 +23,7 @@ NAS 的核心功能应当是可靠的数据存储，长期稳定运行是一大�
 
 - 盘位至少 3，最优 4
 
-博主认为兼顾数据安全和丰富应用的硬盘布置策略是：占用 2 盘位的 `RAID 1`(mirror) + 1 盘位单盘（或 2 盘位 `RAID 0`），前者用于存储个人数据或稀缺资源，后者用于 BT、电影分享等数据容易重新下载的场景。因此满足此策略的 4 盘位硬件就足矣，至于超过 4 盘位的，个人觉得不必要。
+个人认为兼顾数据安全和丰富应用的硬盘布置策略是：占用 2 盘位的 `RAID 1`(mirror) + 1 盘位单盘（或 2 盘位 `RAID 0`），前者用于存储个人数据或稀缺资源，后者用于 BT、电影分享等数据容易重新下载的场景。因此满足此策略的 4 盘位硬件就足矣，至于超过 4 盘位的，个人觉得不必要。
 
 ## NAS 系统选择
 
