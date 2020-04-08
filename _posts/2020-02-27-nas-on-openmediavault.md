@@ -68,7 +68,7 @@ openmediavault 成功运行后，就可以用其 Web 图形界面组建 RAID 和
 
 ### 安装 Docker
 
-为了运行 Nextcloud（云盘）、Transmission（Bt下载）等软件，需要安装和配置 Docker 运行环境。
+为了运行 Nextcloud（云盘）、Transmission（BT 下载）等软件，需要安装和配置 Docker 运行环境。
 
 首先按其官网的方法安装三方扩展插件库 [omv-extras](http://omv-extras.org/) 
 
