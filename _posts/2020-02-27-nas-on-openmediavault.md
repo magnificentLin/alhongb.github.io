@@ -11,15 +11,15 @@ seo:
 
 ## 硬件选择
 
-博主用过的 DIY NAS 硬件有小马V5（已退役）和蜗牛星际，这里提一些硬件选购建议，供读者参考：
+本人用过的 DIY NAS 硬件有小马 V5（已退役）和蜗牛星际，这里提一些硬件选购建议，供读者参考：
 
 - 专用设备
 
-NAS 的核心功能应当是可靠的数据存储，长期稳定运行是一大要素，因此不建议使用虚拟化技术（一设备多用途）、树莓派等非专用设备来搭建 NAS，因为它们最后基本上都会成为过渡方案。
+NAS 的核心功能应当是可靠的数据存储，长期稳定运行是一大要素，因此不建议使用虚拟化技术（一设备多用途）、树莓派等非专用设备来构建你的 NAS。
 
 - 低功耗
 
-低功耗不仅带来绿色清洁，还意味着更好的散热性能，这些都是设备长期运行的基础
+低功耗不仅意味着绿色清洁，还带来更好的散热性能，这些都是 NAS 设备长期运行的基础
 
 - 盘位至少 3，最优 4
 
@@ -106,6 +106,19 @@ Docker 支持 3 种文件系统实现：`volume`，`bind mount` 和 `tmpfs mount
 ### 部署 Transmission 容器
 
 Transmission 用来下载 BT（支持磁力链接）非常不错，支持 Web 界面和包含认证的 RPC 控制，我们选择 linuxserver 提供的镜像，[Docker Hub - linuxserver/transmission](https://hub.docker.com/r/linuxserver/transmission/)
+
+容器安装是用 Portainer，具体操作步骤是：
+
+1. 进入 `Volumes` - `Add volume` 页面创建 Transmission 容器配置数据存储专用 `volume`
+    - 填写 `Name`，例如 `transmission_config`
+    - 点击 `Create the volume` 创建该 `volume`
+2. 进入 `Containers` - `Add container` 页面配置容器参数
+    - 填写任意的 `Name`，填写 `Image` 为 `linuxserver/transmission`
+    - `Manual network port publishing` 中点击 `publish a new network port`，按 linuxserver/transmission 在 Docker Hub 页面的要求依次添加端口映射
+    - `Volumes` - `Volume mapping` 选项中将专用于存储配置数据的 `Volume` 即 `transmission_config`，绑定到 `/config` 和 `/watch`；`Bind` 形式绑定 `/downloads` 到你指定的 NAS 共享目录。
+    - `Env` - `Environment variables` 中添加 `PUID`、`PGID` 两个环境变量，可以分别填写 `1000` 和 `100` 即你的 openmediavault 使用用户和 `users` 组
+    - `Restart policy` 中选择 `Unless stopped`
+    - 最后点击 `Deploy the container` 完成容器部署
 
 ### 部署 Nextcloud 容器
 
