@@ -1,5 +1,5 @@
 ---
-title: 基于 openmediavault 的个人 NAS 搭建指南
+title: openmediavaul NAS 搭建指南
 categories: [Tutorial, NAS]
 tags: [openmediavault]
 layout: post
