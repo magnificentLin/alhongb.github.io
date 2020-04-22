@@ -45,7 +45,7 @@ seo:
 
 ![OpenWrt DHCP list](/assets/img/post/OpenWrt-DHCP-list.jpg)
 
-如果对自动命名的 hostname 不满意，可以在 `Network` - `DHCP and DNS` - `Static Leases` 里自定义 `Hostname` 和对应的静态 IP。
+如果对自动命名的主机名不满意或希望固定 IP，可以在 `Network` - `DHCP and DNS` - `Static Leases` 里自定义 `Hostname` 和对应的静态 IP。
 
 **注意：**Chrome 浏览器需要在 hostname 的后面加一个 `/` 以转义关键词搜索；静态 IP 和 hostname 是绑定到 MAC 地址的，因此自定义 DHCP 静态记录时你需要指定设备的 MAC 地址。
 
